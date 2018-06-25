@@ -12,6 +12,15 @@ dependencies {</br>
 
  ![img](https://raw.githubusercontent.com/506954774/ScrollviewWithinRecyclerviewAndFloatView/master/scrollview_within_recyclerview.gif)
 
+### 概述:</br>
+并不是继承了Scrollview,而是通过控制事件分发,使界面达到上图的效果.界面是Fragment,里面的viewPager</br>
+里面添加子碎片.碎片里可以放Recyclerview.viewPager上面的headview可以添加左右滑动的广告banner控件,其</br>
+事件分发逻辑已经处理过:左右滑动,则banner消费事件,上下滑动则父容器消费事件</br>
+
+dependencies {</br>
+    // your dependencies ...</br>
+    compile 'com.linklink.views:ScrollviewWithinRecyclerviewAndFloatView:1.0.0'</br>
+}</br>
 
   ## MainActivity.java : </br>
   ```Java
