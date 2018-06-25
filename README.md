@@ -14,6 +14,7 @@ dependencies {</br>
 
 
   ## MainActivity.java : </br>
+  ```Java
   package linklink.com.demo;
 
   import android.os.Bundle;
@@ -33,4 +34,4 @@ dependencies {</br>
           }
       }
   }
-  ```
+ ```
