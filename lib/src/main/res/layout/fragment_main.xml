@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+   >
+
+
+    <RelativeLayout
+        android:id="@+id/ll_content_root"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+
+        <LinearLayout
+            android:id="@+id/ll_root2"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <linklink.com.scrollview_within_recyclerview.custom_view.MyDispatchRelativeLayout2
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/ll_head"
+                android:orientation="vertical">
+
+
+                <!--广告位-->
+                <LinearLayout
+                    android:id="@+id/ad_list"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:background="#000000"
+                    android:layout_height="wrap_content"
+
+                    ></LinearLayout>
+
+                <RelativeLayout
+                    android:layout_below="@+id/ad_list"
+
+                    android:background="#ffffff"
+                    android:id="@+id/rl_tab_root"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+
+                        <LinearLayout
+                            android:id="@+id/ll_tab_container"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+
+                    </LinearLayout>
+
+
+
+
+
+                </RelativeLayout>
+
+
+
+
+            </linklink.com.scrollview_within_recyclerview.custom_view.MyDispatchRelativeLayout2>
+
+            <linklink.com.scrollview_within_recyclerview.custom_view.MyDispatchRelativeLayout
+                android:id="@+id/rl_vp_containner"
+                android:layout_width="match_parent"
+                android:layout_height="1000dp">
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/vp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#ffffff"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentStart="true">
+
+                </android.support.v4.view.ViewPager>
+
+
+            </linklink.com.scrollview_within_recyclerview.custom_view.MyDispatchRelativeLayout>
+
+        </LinearLayout>
+
+
+
+        <RelativeLayout
+            android:id="@+id/rl_title"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            >
+
+            <ImageView
+                android:id="@+id/iv_background"
+                android:alpha="0"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:id="@+id/rl_titlt_root"
+                android:layout_marginTop="20dp"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+
+
+
+            </LinearLayout>
+
+
+
+        </RelativeLayout>
+
+
+
+    </RelativeLayout>
+
+
+
+</RelativeLayout>

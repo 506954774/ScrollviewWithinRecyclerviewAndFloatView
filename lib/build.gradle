@@ -1,0 +1,61 @@
+apply plugin: 'com.android.library'
+
+
+repositories {
+    flatDir {
+        dir 'libs'
+    }
+    maven { url "https://jitpack.io" }
+}
+
+android {
+
+    ////////////////by: Chuck/////////start/////////////////
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'LICENSE.txt'
+    }
+    //关掉lint建议
+    lintOptions {
+        abortOnError false
+    }
+/*    //启用数据绑定
+    dataBinding {
+        enabled = true;
+    }*/
+    //快速编译
+    tasks.whenTaskAdded { task ->
+        if (task.name.contains('AndroidTest')) {
+            task.enabled = false
+        }
+    }
+    ////////////////by: Chuck/////////end/////////////////
+
+    compileSdkVersion 25
+    buildToolsVersion "25.0.1"
+
+    defaultConfig {
+        //applicationId "linklink.com.scrollview_within_recyclerview"
+        minSdkVersion 19
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:appcompat-v7:25.1.0'
+    compile "com.android.support:recyclerview-v7:25.1.0"
+
+
+}

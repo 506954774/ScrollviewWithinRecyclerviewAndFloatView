@@ -1,0 +1,21 @@
+package linklink.com.scrollview_within_recyclerview;
+
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+
+import linklink.com.scrollview_within_recyclerview.ui.CustomMainFragment;
+
+public class MainActivity extends FragmentActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        Fragment fragment=new MyFragment();
+        if(fragment!=null){
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commitAllowingStateLoss();
+        }
+    }
+}
