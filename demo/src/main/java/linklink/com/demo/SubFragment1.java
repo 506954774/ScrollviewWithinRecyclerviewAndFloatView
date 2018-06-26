@@ -34,6 +34,16 @@ public class SubFragment1 extends CustomBaseFragment2 {
 
     private ArrayList<String> mDatas;
 
+    //滑到顶部,       这个方法在还原初始状态时会调用,可以不重写
+    public void setSelection(int position){
+        try {
+            if(position==0){
+                mRecyclerView.smoothScrollToPosition(position);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     //第一个item(包含headview)是否在顶部
     public boolean isHeadviewAtTopNow(){

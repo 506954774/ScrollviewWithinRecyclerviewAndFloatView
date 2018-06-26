@@ -47,6 +47,7 @@ public abstract class CustomMainFragment extends Fragment implements ViewPager.O
     protected MyDispatchRelativeLayout rlVpContainner;
     protected RelativeLayout  rlTitleFilled;
     protected ViewPager vp;
+    private RelativeLayout rl_content_root;
 
 
     protected List<CustomBaseFragment2> mPagerList = new ArrayList<CustomBaseFragment2>();// 碎片集合
@@ -71,19 +72,27 @@ public abstract class CustomMainFragment extends Fragment implements ViewPager.O
         rlVpContainner= (MyDispatchRelativeLayout) getView().findViewById(R.id.rl_vp_containner);
         rlTitleFilled= (RelativeLayout) getView().findViewById(R.id.rl_title);
         vp= (ViewPager) getView().findViewById(R.id.vp);
+        rl_content_root= (RelativeLayout) getView().findViewById(R.id.rl_content_root);
 
         //重置title高度(子类的title可能需要设置不同的高度)
         ViewGroup.LayoutParams pa=rlTitleFilled.getLayoutParams();
-        pa.height=getTitleViewNewHeight();
-        LogUtil.i(TAG,"重置title父容器的高度值:"+getTitleViewNewHeight());
+        pa.height= getTitleViewParentHeight();
+        LogUtil.i(TAG,"重置title父容器的高度值:"+ getTitleViewParentHeight());
         rlTitleFilled.setLayoutParams(pa);
 
         ivBackground.setImageResource(getTitleBackgroundRes());
         mTitleViewRoot= (LinearLayout) getView().findViewById(R.id.rl_titlt_root);
+
         View titleView=getTitleView();
         if(titleView!=null){
             mTitleViewRoot.addView(titleView);
         }
+        //重置title的margigTop,以适应不同的状态栏高度
+        ViewGroup.MarginLayoutParams titlePa= (ViewGroup.MarginLayoutParams) titleView.getLayoutParams();
+        titlePa.setMargins(0, getTitleViewMarginTop(),0,0);
+
+
+
 
         View headView=getHeadView();
         if(headView!=null){
@@ -635,7 +644,11 @@ public abstract class CustomMainFragment extends Fragment implements ViewPager.O
                     //重置viewPager的最大高度:  注意:虚拟返回键被收起后,看看获得到的屏幕高度是否有变化
                     //rl_vp_containner  屏幕高度-title-tab-底部tab
                     //int maxHeight= DensityUtil.getDisplayHeight(getActivity()) - DensityUtil.dp2px(getActivity(),70+45+0);
-                    int maxHeight= DensityUtil.getDisplayHeight(getActivity())-rlTitleFilled.getHeight()-mTabContainer.getHeight();
+
+                    //不再使用这种方式获取能滑动的最大高度,因为界面可能不包含状态栏
+                    //int maxHeight= DensityUtil.getDisplayHeight(getActivity())-rlTitleFilled.getHeight()-mTabContainer.getHeight();
+
+                    int maxHeight= rl_content_root.getHeight()-rlTitleFilled.getHeight()-mTabContainer.getHeight();
                     ViewGroup.LayoutParams pa=rlVpContainner.getLayoutParams();
                     pa.height=maxHeight;
                     LogUtil.i(TAG,"重置vp父容器的高度值:"+maxHeight);
@@ -764,14 +777,24 @@ public abstract class CustomMainFragment extends Fragment implements ViewPager.O
     public  abstract View getTitleView();
 
     /**
-     * @method name:getTitleViewNewHeight
+     * @method name:getTitleViewParentHeight
      * @des:重置title父容器总高度(不包括getTitleView,因为getTitleView的父容器它有一个paddingTop)
      * @param :[]
      * @return type:int
      * @date 创建时间:2018/6/25
      * @author Chuck
      **/
-    public  abstract int getTitleViewNewHeight();
+    public  abstract int getTitleViewParentHeight();
+
+    /**
+     * @method name:getTitleViewMarginTop
+     * @des:重置title父容器paddingTop,单位:像素
+     * @param :[]
+     * @return type:int
+     * @date 创建时间:2018/6/25
+     * @author Chuck
+     **/
+    public  abstract int getTitleViewMarginTop();
 
     /**
      * @method name:getHeadView

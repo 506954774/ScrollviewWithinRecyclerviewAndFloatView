@@ -1,5 +1,8 @@
 apply plugin: 'com.android.library'
 
+apply plugin: 'maven'
+apply plugin: 'com.novoda.bintray-release'
+
 
 repositories {
     flatDir {
@@ -58,4 +61,26 @@ dependencies {
     compile "com.android.support:recyclerview-v7:25.1.0"
 
 
+}
+
+
+
+publish {
+    userOrg = 'linklink'
+    groupId = 'com.linklink.views'
+    artifactId = 'ScrollviewWithinRecyclerviewAndFloatView'
+    version = '1.0.2'
+    description = 'ScrollviewWithinRecyclerviewAndFloatView'
+    website = 'https://github.com/506954774/ScrollviewWithinRecyclerviewAndFloatView'
+}
+
+
+
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}
+
+tasks.withType(Javadoc) {
+    options.addStringOption('Xdoclint:none', '-quiet')
+    options.addStringOption('encoding', 'UTF-8')
 }
