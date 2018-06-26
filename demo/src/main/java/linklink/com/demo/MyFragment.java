@@ -18,16 +18,19 @@ import linklink.com.scrollview_within_recyclerview.utils.DensityUtil;
  **/
 public class MyFragment extends CustomMainFragment {
 
+    @Override
     public int getTitleBackgroundRes(){
         //设置透明控件的背景资源.
         return R.drawable.shape_blue_rect;
     }
 
+    @Override
     public View getTitleView(){
         //设置顶部的title布局
         return LayoutInflater.from(getActivity()).inflate(R.layout.title, null);
     }
 
+    @Override
     public int getTitleViewParentHeight(){
         //设置getTitleView()的父容器的高度值.返回title的实际高度 加上 getTitleViewMarginTop()就行
         return DensityUtil.dp2px(getActivity(),50)  +  getTitleViewMarginTop();//50是title布局里写死的50dp
@@ -42,16 +45,19 @@ public class MyFragment extends CustomMainFragment {
         return DensityUtil.dp2px(getActivity(),20);
     }
 
+    @Override
     public View getHeadView(){
         //这里可以返回一个左右滑动的banner.滑动事件的分发逻辑已经处理过
         return LayoutInflater.from(getActivity()).inflate(R.layout.banner, null);
     }
 
+    @Override
     public View getFloatView(){
         //设置悬浮控件,如果需要与viewpager绑定,可以定义一个成员变量,然后重写onActivityCreated,添加绑定逻辑
         return LayoutInflater.from(getActivity()).inflate(R.layout.float_view, null);
     }
 
+    @Override
     public ArrayList<CustomBaseFragment2> getSubFragments(){
         //在viewpager里添加子碎片.CustomBaseFragment2
         ArrayList<CustomBaseFragment2> list =new ArrayList<>();
