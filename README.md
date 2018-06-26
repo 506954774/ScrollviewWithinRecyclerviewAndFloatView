@@ -5,7 +5,7 @@
 ### 添加依赖:</br>
 dependencies {</br>
     // your dependencies ...</br>
-    compile 'com.linklink.views:ScrollviewWithinRecyclerviewAndFloatView:1.0.0'</br>
+    compile 'com.linklink.views:ScrollviewWithinRecyclerviewAndFloatView:1.0.2'</br>
 }</br>
 
 ### 效果图:</br>
