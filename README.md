@@ -79,7 +79,7 @@ dependencies {</br>
        }
 
        public View getHeadView(){
-           //这里可以返回一个左右滑动的banner.滑动事件的分发逻辑已经处理过
+           //这里可以返回一个可左右滑动的banner.滑动事件的分发逻辑已经处理过
            return LayoutInflater.from(getActivity()).inflate(R.layout.banner, null);
        }
 
@@ -89,7 +89,7 @@ dependencies {</br>
        }
 
        public ArrayList<CustomBaseFragment2> getSubFragments(){
-           //返回子碎片.CustomBaseFragment2
+           //在viewpager里添加子碎片.CustomBaseFragment2
            ArrayList<CustomBaseFragment2> list =new ArrayList<>();
            SubFragment1 subFragment1=new SubFragment1();
            list.add(subFragment1);
