@@ -63,49 +63,49 @@ dependencies {</br>
     **/
    public class MyFragment extends CustomMainFragment {
 
-       public int getTitleBackgroundRes(){
-               //透明控件的背景资源.
-               return linklink.com.scrollview_within_recyclerview.R.drawable.shape_blue_rect;
-           }
+            public int getTitleBackgroundRes(){
+                //设置透明控件的背景资源.
+                return R.drawable.shape_blue_rect;
+            }
 
-           public View getTitleView(){
-               //设置顶部的title布局
-               return LayoutInflater.from(getActivity()).inflate(linklink.com.scrollview_within_recyclerview.R.layout.title, null);
-           }
+            public View getTitleView(){
+                //设置顶部的title布局
+                return LayoutInflater.from(getActivity()).inflate(R.layout.title, null);
+            }
 
-           public int getTitleViewParentHeight(){
-               //设置getTitleView()的父容器的高度值.返回title的实际高度 加上 getTitleViewMarginTop()就行
-               return DensityUtil.dp2px(getActivity(),50)  +  getTitleViewMarginTop();//50是title布局里写死的50dp
-           }
+            public int getTitleViewParentHeight(){
+                //设置getTitleView()的父容器的高度值.返回title的实际高度 加上 getTitleViewMarginTop()就行
+                return DensityUtil.dp2px(getActivity(),50)  +  getTitleViewMarginTop();//50是title布局里写死的50dp
+            }
 
 
-           @Override
-           public int getTitleViewMarginTop() {
-               //设置TitleView的MarginTop,单位:像素.因为有些界面可能包含了顶部的状态栏.
-               // 包含了状态栏,这个方法返回你获取的状态栏高度
-               // 不包含状态栏,这个方法直接返回0
-               return DensityUtil.dp2px(getActivity(),20);
-           }
+            @Override
+            public int getTitleViewMarginTop() {
+                //设置TitleView的MarginTop,单位:像素.因为有些界面可能包含了顶部的状态栏.
+                // 包含了状态栏,这个方法返回你获取的状态栏高度
+                // 不包含状态栏,这个方法直接返回0
+                return DensityUtil.dp2px(getActivity(),20);
+            }
 
-           public View getHeadView(){
-               //这里可以返回一个左右滑动的banner.滑动事件的分发逻辑已经处理过
-               return LayoutInflater.from(getActivity()).inflate(linklink.com.scrollview_within_recyclerview.R.layout.banner, null);
-           }
+            public View getHeadView(){
+                //这里可以返回一个左右滑动的banner.滑动事件的分发逻辑已经处理过
+                return LayoutInflater.from(getActivity()).inflate(R.layout.banner, null);
+            }
 
-           public View getFloatView(){
-               //设置悬浮控件,如果需要与viewpager绑定,可以定义一个成员变量,然后重写onActivityCreated,添加绑定逻辑
-               return LayoutInflater.from(getActivity()).inflate(linklink.com.scrollview_within_recyclerview.R.layout.float_view, null);
-           }
+            public View getFloatView(){
+                //设置悬浮控件,如果需要与viewpager绑定,可以定义一个成员变量,然后重写onActivityCreated,添加绑定逻辑
+                return LayoutInflater.from(getActivity()).inflate(R.layout.float_view, null);
+            }
 
-           public ArrayList<CustomBaseFragment2> getSubFragments(){
-               //在viewpager里添加子碎片.CustomBaseFragment2
-               ArrayList<CustomBaseFragment2> list =new ArrayList<>();
-               SubFragment1 subFragment1=new SubFragment1();
-               list.add(subFragment1);
+            public ArrayList<CustomBaseFragment2> getSubFragments(){
+                //在viewpager里添加子碎片.CustomBaseFragment2
+                ArrayList<CustomBaseFragment2> list =new ArrayList<>();
+                SubFragment1 subFragment1=new SubFragment1();
+                list.add(subFragment1);
 
-               SubFragment2 subFragment2=new SubFragment2();
-               list.add(subFragment2);
-               return list;
-           }
+                SubFragment2 subFragment2=new SubFragment2();
+                list.add(subFragment2);
+                return list;
+            }
    }
   ```
