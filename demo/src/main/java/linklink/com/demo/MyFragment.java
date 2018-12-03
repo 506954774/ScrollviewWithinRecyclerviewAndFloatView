@@ -1,5 +1,8 @@
 package linklink.com.demo;
 
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -68,4 +71,35 @@ public class MyFragment extends CustomMainFragment {
         list.add(subFragment2);
         return list;
     }
+
+    @Override
+    public MyViewPager getMyViewPager() {
+        return new CustomViewPager(getChildFragmentManager());
+    }
+
+    /**
+     * ViewPager适配器
+     */
+    public class CustomViewPager extends MyViewPager {
+
+        public CustomViewPager(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int arg0) {
+            return mPagerList.get(arg0);
+        }
+
+        @Override
+        public int getCount() {
+            return mPagerList.size();
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return "";
+        }
+    }
+
 }

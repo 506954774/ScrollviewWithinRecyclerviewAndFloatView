@@ -286,16 +286,4 @@ public class MyDispatchRelativeLayout extends RelativeLayout {
         this.mInterceptProvider = mInterceptProvider;
     }
 
-    @Override
-    protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
-
-        try {
-            //Canvas.MAXMIMUM_BITMAP_SIZE;
-            LogUtil.i(TAG,"canvas.getMaximumBitmapHeight():"+canvas.getMaximumBitmapHeight());
-            LogUtil.i(TAG,"canvas.getMaximumBitmapWidth():"+canvas.getMaximumBitmapWidth());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 }

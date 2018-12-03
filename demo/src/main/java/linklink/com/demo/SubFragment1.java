@@ -29,12 +29,12 @@ public class SubFragment1 extends CustomBaseFragment2 {
 
     private static  String TAG = "SubFragment1";
 
-    protected RecyclerView mRecyclerView;
+    protected RecyclerView mRecyclerView;//可以改为自己的带刷新的控件.也可以是Listview
 
 
     private ArrayList<String> mDatas;
 
-    //滑到顶部,       这个方法在还原初始状态时会调用,可以不重写
+    //滑到顶部,       这个方法在控件还原初始状态时会调用,可以不重写
     public void setSelection(int position){
         try {
             if(position==0){
