@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 
+import linklink.com.scrollview_within_recyclerview.R;
+
 public class MainActivity extends FragmentActivity {
 
     @Override

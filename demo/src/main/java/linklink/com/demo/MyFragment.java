@@ -8,6 +8,7 @@ import android.view.View;
 
 import java.util.ArrayList;
 
+import linklink.com.scrollview_within_recyclerview.R;
 import linklink.com.scrollview_within_recyclerview.base.CustomBaseFragment2;
 import linklink.com.scrollview_within_recyclerview.ui.*;
 import linklink.com.scrollview_within_recyclerview.utils.DensityUtil;
@@ -73,14 +74,14 @@ public class MyFragment extends CustomMainFragment {
     }
 
     @Override
-    public MyViewPager getMyViewPager() {
+    public MyViewPagerAdapter getMyViewPagerAdapter() {
         return new CustomViewPager(getChildFragmentManager());
     }
 
     /**
      * ViewPager适配器
      */
-    public class CustomViewPager extends MyViewPager {
+    public class CustomViewPager extends MyViewPagerAdapter {
 
         public CustomViewPager(FragmentManager fm) {
             super(fm);
@@ -98,7 +99,7 @@ public class MyFragment extends CustomMainFragment {
 
         @Override
         public CharSequence getPageTitle(int position) {
-            return "";
+            return "测试";
         }
     }
 

@@ -680,9 +680,9 @@ public abstract class CustomMainFragment extends Fragment implements ViewPager.O
     /**
      * ViewPager适配器
      */
-    public class MyViewPager extends FragmentPagerAdapter {
+    public class MyViewPagerAdapter extends FragmentPagerAdapter {
 
-        public MyViewPager(FragmentManager fm) {
+        public MyViewPagerAdapter(FragmentManager fm) {
             super(fm);
         }
 
@@ -729,7 +729,7 @@ public abstract class CustomMainFragment extends Fragment implements ViewPager.O
         if (vp.getAdapter() == null) {
             //初始化ViewPager
             //vp.setAdapter(new MyViewPager(getChildFragmentManager()));//注意fragmentAdapter的构造器
-            vp.setAdapter(getMyViewPager());//注意fragmentAdapter的构造器
+            vp.setAdapter(getMyViewPagerAdapter());//注意fragmentAdapter的构造器
             vp.setOnPageChangeListener(this);
 
             LogUtil.e(TAG, "initIndex:" + initIndex);
@@ -752,7 +752,17 @@ public abstract class CustomMainFragment extends Fragment implements ViewPager.O
 
 
 
-
+    /**
+     * @method name:getMyViewPager
+     * @des:viewPager适配器
+     * @param :[]
+     * @return type:linklink.com.scrollview_within_recyclerview.ui.CustomMainFragment.MyViewPager
+     * @date 创建时间:2018/12/3
+     * @author Chuck
+     **/
+    protected      MyViewPagerAdapter getMyViewPagerAdapter(){
+        return new MyViewPagerAdapter(getChildFragmentManager());
+    }
 
 
 
@@ -828,15 +838,7 @@ public abstract class CustomMainFragment extends Fragment implements ViewPager.O
     public  abstract   ArrayList<CustomBaseFragment2> getSubFragments();
 
 
-    /**
-     * @method name:getMyViewPager
-     * @des:viewPager适配器
-     * @param :[]
-     * @return type:linklink.com.scrollview_within_recyclerview.ui.CustomMainFragment.MyViewPager
-     * @date 创建时间:2018/12/3
-     * @author Chuck
-     **/
-    public  abstract   MyViewPager getMyViewPager();
+
 
 
 }
