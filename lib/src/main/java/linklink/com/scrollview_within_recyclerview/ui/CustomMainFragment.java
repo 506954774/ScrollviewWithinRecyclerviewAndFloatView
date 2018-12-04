@@ -105,7 +105,9 @@ public abstract class CustomMainFragment extends Fragment implements ViewPager.O
             mTabContainer.addView(floatView);
         }
 
-        getFragmnets();
+        if(autoSetupViewPager()){
+            getFragmnets();
+        }
         initHeadScrollListener();
         initViewPagerContainerScrollListener();
         getScroolMax();
@@ -762,6 +764,18 @@ public abstract class CustomMainFragment extends Fragment implements ViewPager.O
      **/
     protected      MyViewPagerAdapter getMyViewPagerAdapter(){
         return new MyViewPagerAdapter(getChildFragmentManager());
+    }
+
+    /**
+     * @method name:autoSetupViewPager
+     * @des:是否开始就自动填充viewpager,加这个方法,使得子类能动态修改viewapager(因为有的时候数据类型是要另外通过接口获取的)
+     * @param :[]
+     * @return type:boolean
+     * @date 创建时间:2018/12/4
+     * @author Chuck
+     **/
+    protected   boolean  autoSetupViewPager(){
+        return true;
     }
 
 

@@ -69,7 +69,7 @@ publish {
     userOrg = 'linklink'
     groupId = 'com.linklink.views'
     artifactId = 'ScrollviewWithinRecyclerviewAndFloatView'
-    version = '1.0.4'
+    version = '1.0.5'
     description = 'ScrollviewWithinRecyclerviewAndFloatView'
     website = 'https://github.com/506954774/ScrollviewWithinRecyclerviewAndFloatView'
 }
