@@ -21,12 +21,15 @@
             android:layout_height="match_parent">
 
 
+
             <linklink.com.scrollview_within_recyclerview.custom_view.MyDispatchRelativeLayout2
 
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/ll_head"
                 android:orientation="vertical">
+
+
 
 
                 <!--广告位-->
@@ -117,6 +120,16 @@
 
     </RelativeLayout>
 
+    <!-- 动画效果-->
+    <linklink.com.scrollview_within_recyclerview.custom_view.CGBHeader
+        android:id="@+id/anima"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        >
+
+    </linklink.com.scrollview_within_recyclerview.custom_view.CGBHeader>
 
 
 </RelativeLayout>

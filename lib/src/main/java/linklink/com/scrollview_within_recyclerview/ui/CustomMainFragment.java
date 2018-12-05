@@ -1,5 +1,6 @@
 package linklink.com.scrollview_within_recyclerview.ui;
 
+import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -21,6 +22,7 @@ import java.util.List;
 
 import linklink.com.scrollview_within_recyclerview.R;
 import linklink.com.scrollview_within_recyclerview.base.CustomBaseFragment2;
+import linklink.com.scrollview_within_recyclerview.custom_view.CGBHeader;
 import linklink.com.scrollview_within_recyclerview.custom_view.MyDispatchRelativeLayout;
 import linklink.com.scrollview_within_recyclerview.custom_view.MyDispatchRelativeLayout2;
 import linklink.com.scrollview_within_recyclerview.utils.DensityUtil;
@@ -39,7 +41,8 @@ public abstract class CustomMainFragment extends Fragment implements ViewPager.O
 
     protected static final int MARGIN_THRESHOLD = 10;//浮动tab的允许误差值
     private static final int FLOAT_THRESHOLD_Y = 150;//悬浮临界容差
-    private static final int DOWN_BACK_THRESHOLD = 1;//是否可以下滑,下滑的上限.有则滑到极限松手,回弹
+    private static  int DOWN_BACK_THRESHOLD = 200;//是否可以下滑,下滑的上限.有则滑到极限松手,回弹
+    private static  int TOP_REFRESH_THRESHOLD = 100;//触发刷新的阈值
 
     protected MyDispatchRelativeLayout2 llHead;
     protected LinearLayout adList;
@@ -49,11 +52,15 @@ public abstract class CustomMainFragment extends Fragment implements ViewPager.O
     protected ViewPager vp;
     private RelativeLayout rl_content_root;
 
+    private CGBHeader mCGBHeader;
+
 
     protected List<CustomBaseFragment2> mPagerList = new ArrayList<CustomBaseFragment2>();// 碎片集合
     protected int initIndex = 0;//子页索引
     protected LinearLayout mTitleViewRoot;
     private LinearLayout mTabContainer;
+    private int mCGBHeaderHeight;//头动画的高度
+    private boolean mRefreshing;
 
 
     @Nullable
@@ -65,6 +72,8 @@ public abstract class CustomMainFragment extends Fragment implements ViewPager.O
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        mCGBHeader= (CGBHeader) getView().findViewById(R.id.anima);
 
         llHead= (MyDispatchRelativeLayout2) getView().findViewById(R.id.ll_head);
         adList= (LinearLayout) getView().findViewById(R.id.ad_list);
@@ -142,9 +151,15 @@ public abstract class CustomMainFragment extends Fragment implements ViewPager.O
             @Override
             public boolean onTouch(final View v, MotionEvent event) {
 
+                if(mRefreshing){//正在刷新,直接返回
+                    return true;
+                }
+
                 switch (event.getAction()) {
 
                     case MotionEvent.ACTION_DOWN://按下时记录纵坐标
+
+
 
 
                         if (mScroolMax == 0) {//是个正值,head在上滑的上限值
@@ -214,6 +229,17 @@ public abstract class CustomMainFragment extends Fragment implements ViewPager.O
 
                             //重置顶部title的透明度
                             resetTitleAlpha(bottomNew);
+
+
+                            //刷新动画开启,下滑,
+                            if(isRefreshable()){
+                                final ViewGroup.MarginLayoutParams p3 = (ViewGroup.MarginLayoutParams) mCGBHeader.getLayoutParams();
+                                p3.setMargins(left, topNew-mCGBHeaderHeight, right, bottomNew+mCGBHeaderHeight);
+                                mCGBHeader.setLayoutParams(p3);
+
+                                //修改动画
+                                mCGBHeader.onUIPositionChange(Math.abs(mHeadSlidedDistance),Math.abs(TOP_REFRESH_THRESHOLD));
+                            }
                         }
 
 
@@ -229,6 +255,9 @@ public abstract class CustomMainFragment extends Fragment implements ViewPager.O
 
                         final ViewGroup.MarginLayoutParams paramsNew2 = (ViewGroup.MarginLayoutParams) rlVpContainner.getLayoutParams();
 
+                        final ViewGroup.MarginLayoutParams p3 = (ViewGroup.MarginLayoutParams) mCGBHeader.getLayoutParams();
+
+
                         LogUtil.e(TAG, "MotionEvent.ACTION_UP,topUp" + topUp);
 
                         if(topUp<=0){//上滑,几乎快要悬浮,则抬手时让它悬浮
@@ -239,6 +268,10 @@ public abstract class CustomMainFragment extends Fragment implements ViewPager.O
                                 paramsNew2.setMargins(0,  -1 *mScroolMax, 0,mScroolMax);
                                 rlVpContainner.setLayoutParams(paramsNew2);
 
+
+                                p3.setMargins(0, mCGBHeaderHeight*-1,0, mCGBHeaderHeight);
+                                mCGBHeader.setLayoutParams(p3);
+
                                 //重置顶部title的透明度
                                 resetTitleAlpha(mScroolMax);
                             }
@@ -247,29 +280,89 @@ public abstract class CustomMainFragment extends Fragment implements ViewPager.O
 
                         if (topUp > 0) {//topUp>0表示是下滑后抬起手指,此时回弹head和底下的viewPager
 
+                            if(!isRefreshable()|| Math.abs(mHeadSlidedDistance)<TOP_REFRESH_THRESHOLD){//无需刷新或者滑动太短,直接回去
+                                ValueAnimator anim = ValueAnimator.ofInt(topUp, 0);
+                                anim.setDuration(400); // 设置动画运行的时长 anim.setStartDelay(500); // 设置动画延迟播放时间
+                                anim.setRepeatCount(0); // 设置动画重复播放次数 = 重放次数+1 // 动画播放次数 = infinite时,动画无限重复
+                                // anim.setRepeatMode(ValueAnimator.RESTART);
+                                anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
 
-                            ValueAnimator anim = ValueAnimator.ofInt(topUp, 0);
-                            anim.setDuration(400); // 设置动画运行的时长 anim.setStartDelay(500); // 设置动画延迟播放时间
-                            anim.setRepeatCount(0); // 设置动画重复播放次数 = 重放次数+1 // 动画播放次数 = infinite时,动画无限重复
-                            // anim.setRepeatMode(ValueAnimator.RESTART);
-                            anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                                    @Override
+                                    public void onAnimationUpdate(ValueAnimator animation) {
+                                        int currentValue = (Integer) animation.getAnimatedValue();
 
-                                @Override
-                                public void onAnimationUpdate(ValueAnimator animation) {
-                                    int currentValue = (Integer) animation.getAnimatedValue();
+                                        paramsNew.setMargins(0, currentValue, 0, -1 * currentValue);
+                                        v.setLayoutParams(paramsNew);
 
-                                    paramsNew.setMargins(0, currentValue, 0, -1 * currentValue);
-                                    v.setLayoutParams(paramsNew);
+                                        paramsNew2.setMargins(0, currentValue, 0, -1 * currentValue);
+                                        rlVpContainner.setLayoutParams(paramsNew2);
 
-                                    paramsNew2.setMargins(0, currentValue, 0, -1 * currentValue);
-                                    rlVpContainner.setLayoutParams(paramsNew2);
-                                }
-                            });
+                                        p3.setMargins(0, mCGBHeaderHeight*-1,0, mCGBHeaderHeight);
+                                        mCGBHeader.setLayoutParams(p3);
+                                    }
+                                });
 
-                            anim.start();
+                                anim.start();
 
-                            //重置顶部title的透明度
-                            resetTitleAlpha(0);
+                                //重置顶部title的透明度
+                                resetTitleAlpha(0);
+                            }
+
+                            else{//需要开启刷新
+                                ValueAnimator anim = ValueAnimator.ofInt(topUp, mCGBHeaderHeight);
+                                anim.setDuration(400); // 设置动画运行的时长 anim.setStartDelay(500); // 设置动画延迟播放时间
+                                anim.setRepeatCount(0); // 设置动画重复播放次数 = 重放次数+1 // 动画播放次数 = infinite时,动画无限重复
+                                // anim.setRepeatMode(ValueAnimator.RESTART);
+                                anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+
+                                    @Override
+                                    public void onAnimationUpdate(ValueAnimator animation) {
+                                        int currentValue = (Integer) animation.getAnimatedValue();
+
+                                        paramsNew.setMargins(0, currentValue, 0, -1 * currentValue);
+                                        v.setLayoutParams(paramsNew);
+
+                                        paramsNew2.setMargins(0, currentValue, 0, -1 * currentValue);
+                                        rlVpContainner.setLayoutParams(paramsNew2);
+
+                                        p3.setMargins(0, currentValue-mCGBHeaderHeight, 0, -1 * currentValue+mCGBHeaderHeight);
+                                        mCGBHeader.setLayoutParams(p3);
+                                    }
+                                });
+                                Animator.AnimatorListener li=new Animator.AnimatorListener() {
+                                    @Override
+                                    public void onAnimationStart(Animator animator) {
+
+                                    }
+
+                                    @Override
+                                    public void onAnimationEnd(Animator animator) {
+                                        mCGBHeader.onUIRefreshBegin();
+                                        mCGBHeader.postDelayed(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                onRefresh();//子类去干活
+                                            }
+                                        },1000);
+                                    }
+
+                                    @Override
+                                    public void onAnimationCancel(Animator animator) {
+
+                                    }
+
+                                    @Override
+                                    public void onAnimationRepeat(Animator animator) {
+
+                                    }
+                                };
+                                anim.addListener(li);
+
+                                anim.start();
+
+                                //重置顶部title的透明度
+                                resetTitleAlpha(0);
+                            }
 
                         }
 
@@ -340,6 +433,10 @@ public abstract class CustomMainFragment extends Fragment implements ViewPager.O
         rlVpContainner.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(final View v, MotionEvent event) {
+
+                if(mRefreshing){//正在刷新,直接返回
+                    return true;
+                }
 
                 switch (event.getAction()) {
 
@@ -635,6 +732,19 @@ public abstract class CustomMainFragment extends Fragment implements ViewPager.O
                     LogUtil.i(TAG,"onGlobalLayout()");
                     LogUtil.i(TAG,"onGlobalLayout(),屏幕总高度:"+DensityUtil.getDisplayHeight(getActivity()));
 
+
+                    mCGBHeaderHeight=mCGBHeader.getHeight();
+
+                    LogUtil.i(TAG,"动画控件高度:"+mCGBHeaderHeight);
+
+                    final ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) mCGBHeader.getLayoutParams();
+                    params.setMargins(0, mCGBHeaderHeight*-1,0, mCGBHeaderHeight);
+                    mCGBHeader.setLayoutParams(params);
+
+                    DOWN_BACK_THRESHOLD = mCGBHeaderHeight*2;//是否可以下滑,下滑的上限.有则滑到极限松手,回弹
+                    TOP_REFRESH_THRESHOLD = mCGBHeaderHeight;//触发刷新的阈值
+
+
                     //如果虚拟物理键盘被隐藏了,这个应该会被回调.所以不再remove监听.只要界面有重绘,就重新设置viewPager的高度
                     getView().getViewTreeObserver().removeGlobalOnLayoutListener(this);//只需要监听一次，之后通过listener回调即可
 
@@ -750,8 +860,79 @@ public abstract class CustomMainFragment extends Fragment implements ViewPager.O
         }
     }
 
+    /**
+     * @method name:onRefresh
+     * @des:刷新,准备请求数据
+     * @param :[]
+     * @return type:void
+     * @date 创建时间:2018/12/5
+     * @author Chuck
+     **/
+    protected    void  onRefresh(){
 
+        mRefreshing=true;
 
+         mCGBHeader.postDelayed(new Runnable() {
+             @Override
+             public void run() {
+                 refreshCompleted();
+             }
+         },2000);
+
+    }
+
+    /**
+     * @method name:refreshCompleted
+     * @des:刷新完成
+     * @param :[]
+     * @return type:void
+     * @date 创建时间:2018/12/5
+     * @author Chuck
+     **/
+    protected    void  refreshCompleted(){
+        mRefreshing=false;
+        mCGBHeader.onUIRefreshComplete();
+        final ViewGroup.MarginLayoutParams paramsNew = (ViewGroup.MarginLayoutParams) llHead.getLayoutParams();
+
+        final ViewGroup.MarginLayoutParams paramsNew2 = (ViewGroup.MarginLayoutParams) rlVpContainner.getLayoutParams();
+
+        final ViewGroup.MarginLayoutParams p3 = (ViewGroup.MarginLayoutParams) mCGBHeader.getLayoutParams();
+
+        ValueAnimator anim = ValueAnimator.ofInt(mCGBHeaderHeight, 0);
+        anim.setDuration(400); // 设置动画运行的时长 anim.setStartDelay(500); // 设置动画延迟播放时间
+        anim.setRepeatCount(0); // 设置动画重复播放次数 = 重放次数+1 // 动画播放次数 = infinite时,动画无限重复
+        // anim.setRepeatMode(ValueAnimator.RESTART);
+        anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                int currentValue = (Integer) animation.getAnimatedValue();
+
+                paramsNew.setMargins(0, currentValue, 0, -1 * currentValue);
+                llHead.setLayoutParams(paramsNew);
+
+                paramsNew2.setMargins(0, currentValue, 0, -1 * currentValue);
+                rlVpContainner.setLayoutParams(paramsNew2);
+
+                p3.setMargins(0, currentValue-mCGBHeaderHeight, 0, mCGBHeaderHeight- currentValue);
+                mCGBHeader.setLayoutParams(p3);
+            }
+        });
+
+        anim.start();
+    }
+
+    /**
+     * @method name:isRefreshable()
+     * @des:是否支持顶部刷新
+     * @param :[]
+     * @return type: boolean
+     * @date 创建时间:2018/12/3
+     * @author Chuck
+     **/
+    protected      boolean  isRefreshable(){
+        return true;
+    }
 
 
     /**
