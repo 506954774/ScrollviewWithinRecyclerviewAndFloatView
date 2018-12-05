@@ -152,7 +152,7 @@ public abstract class CustomMainFragment extends Fragment implements ViewPager.O
             public boolean onTouch(final View v, MotionEvent event) {
 
                 if(mRefreshing){//正在刷新,直接返回
-                    return true;
+                    return false;
                 }
 
                 switch (event.getAction()) {
@@ -435,7 +435,7 @@ public abstract class CustomMainFragment extends Fragment implements ViewPager.O
             public boolean onTouch(final View v, MotionEvent event) {
 
                 if(mRefreshing){//正在刷新,直接返回
-                    return true;
+                    return false;
                 }
 
                 switch (event.getAction()) {
