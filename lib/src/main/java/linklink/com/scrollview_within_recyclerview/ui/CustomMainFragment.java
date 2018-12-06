@@ -126,6 +126,10 @@ public abstract class CustomMainFragment extends Fragment implements ViewPager.O
         getScroolMax();
     }
 
+    public boolean ismRefreshing() {
+        return mRefreshing;
+    }
+
     protected int mHeadActionDownX, mHeadActionDownY, mHeadLastY, mHeadSlidedDistance, mScroolMax;
 
     /**
@@ -428,6 +432,9 @@ public abstract class CustomMainFragment extends Fragment implements ViewPager.O
             @Override
             public boolean onInterceptTouchEvent(boolean isScrollUp) {
 
+                if(mRefreshing){//正在刷新,直接返回
+                    return true;
+                }
                 return judgeIntercept(isScrollUp);
 
             }
