@@ -41,8 +41,12 @@ public class MyFragment extends CustomMainFragment {
     }
 
 
+
+
     @Override
     public int getTitleViewMarginTop() {
+
+
         //设置TitleView的MarginTop,单位:像素.因为有些界面可能包含了顶部的状态栏.
         // 包含了状态栏,这个方法返回你获取的状态栏高度
         // 不包含状态栏,这个方法直接返回0

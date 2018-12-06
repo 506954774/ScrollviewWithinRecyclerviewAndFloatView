@@ -341,6 +341,7 @@ public abstract class CustomMainFragment extends Fragment implements ViewPager.O
                                     @Override
                                     public void onAnimationStart(Animator animator) {
                                         mRefreshing=true;
+                                        mTitleViewRoot.setVisibility(View.INVISIBLE);
                                     }
 
                                     @Override
@@ -886,35 +887,30 @@ public abstract class CustomMainFragment extends Fragment implements ViewPager.O
 
     /**
      * @method name:onRefresh
-     * @des:刷新,准备请求数据
+     * @des:刷新,子类重写,可以在里面发网络请求
      * @param :[]
      * @return type:void
      * @date 创建时间:2018/12/5
      * @author Chuck
      **/
     protected    void  onRefresh(){
-
-
-        mTitleViewRoot.setVisibility(View.INVISIBLE);
-
          mCGBHeader.postDelayed(new Runnable() {
              @Override
              public void run() {
                  refreshCompleted();
              }
          },2000);
-
     }
 
     /**
      * @method name:refreshCompleted
-     * @des:刷新完成
+     * @des:刷新完成,则调用这个方法,还原控件状态
      * @param :[]
      * @return type:void
      * @date 创建时间:2018/12/5
      * @author Chuck
      **/
-    protected    void  refreshCompleted(){
+    protected  final   void  refreshCompleted(){
         mTitleViewRoot.setVisibility(View.VISIBLE);
 
         mRefreshing=false;

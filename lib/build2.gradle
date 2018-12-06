@@ -36,7 +36,8 @@ android {
     }
     ////////////////by: Chuck/////////end/////////////////
 
-    compileSdkVersion 27
+    compileSdkVersion 25
+    buildToolsVersion "25.0.1"
 
     defaultConfig {
         //applicationId "linklink.com.scrollview_within_recyclerview"
@@ -56,36 +57,23 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
-    api 'com.android.support:recyclerview-v7:27.1.1'
-    api 'com.android.support:appcompat-v7:27.1.1'
+    compile 'com.android.support:appcompat-v7:25.1.0'
+    compile "com.android.support:recyclerview-v7:25.1.0"
 
 
 }
 
 
 
-/*publish {
+publish {
     userOrg = 'linklink'
     groupId = 'com.linklink.views'
     artifactId = 'ScrollviewWithinRecyclerviewAndFloatView'
     version = '1.0.5'
     description = 'ScrollviewWithinRecyclerviewAndFloatView'
     website = 'https://github.com/506954774/ScrollviewWithinRecyclerviewAndFloatView'
-}*/
-
-publish {
-    userOrg = 'linklink'  //这个不是用户名,是组织名
-    groupId = 'com.linklink.views'  //可随意填写,一般填公司名加模块名
-    artifactId = 'ScrollviewWithinRecyclerviewAndFloatView'  //这个是在bintray.com的网页里添加的package name.
-    version = '1.0.6'
-    publishVersion='1.0.6'
-    description = 'ScrollviewWithinRecyclerviewAndFloatView'
-    desc='ScrollviewWithinRecyclerviewAndFloatView'
-    website = 'https://github.com/506954774/ScrollviewWithinRecyclerviewAndFloatView'
-    bintrayUser='15262592514'
-    bintrayKey='562282f2c1605ff353d709b35038181b9ce1a5b2'
-    dryRun=false
 }
+
 
 
 tasks.withType(JavaCompile) {
