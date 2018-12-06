@@ -75,6 +75,10 @@ public abstract class CustomMainFragment extends Fragment implements ViewPager.O
 
         mCGBHeader= (CGBHeader) getView().findViewById(R.id.anima);
 
+        if(!isRefreshable()){//头,动画
+            mCGBHeader.setVisibility(View.INVISIBLE);
+        }
+
         llHead= (MyDispatchRelativeLayout2) getView().findViewById(R.id.ll_head);
         adList= (LinearLayout) getView().findViewById(R.id.ad_list);
         ivBackground= (ImageView) getView().findViewById(R.id.iv_background);
@@ -332,7 +336,7 @@ public abstract class CustomMainFragment extends Fragment implements ViewPager.O
                                 Animator.AnimatorListener li=new Animator.AnimatorListener() {
                                     @Override
                                     public void onAnimationStart(Animator animator) {
-
+                                        mRefreshing=true;
                                     }
 
                                     @Override
@@ -680,7 +684,7 @@ public abstract class CustomMainFragment extends Fragment implements ViewPager.O
     }
 
 
-    private void resetTitleAlpha(int llHeadMarginBottom){
+    protected void resetTitleAlpha(int llHeadMarginBottom){
 
         LogUtil.i(TAG,"resetTitleAlpha:llHeadMarginBottom,="+llHeadMarginBottom);
         //原始值
@@ -710,6 +714,19 @@ public abstract class CustomMainFragment extends Fragment implements ViewPager.O
         ivBackground.setAlpha(alpha);
 
 
+
+    }
+
+
+    /**
+     * @method name:setAlpha
+     * @des:子类可以重写,拿到这个alpha,对某个控件进行处理
+     * @param :[alpha]
+     * @return type:void
+     * @date 创建时间:2018/12/6
+     * @author Chuck
+     **/
+    protected void setAlpha(float alpha){
 
     }
 
@@ -870,7 +887,8 @@ public abstract class CustomMainFragment extends Fragment implements ViewPager.O
      **/
     protected    void  onRefresh(){
 
-        mRefreshing=true;
+
+        mTitleViewRoot.setVisibility(View.INVISIBLE);
 
          mCGBHeader.postDelayed(new Runnable() {
              @Override
@@ -890,6 +908,8 @@ public abstract class CustomMainFragment extends Fragment implements ViewPager.O
      * @author Chuck
      **/
     protected    void  refreshCompleted(){
+        mTitleViewRoot.setVisibility(View.VISIBLE);
+
         mRefreshing=false;
         mCGBHeader.onUIRefreshComplete();
         final ViewGroup.MarginLayoutParams paramsNew = (ViewGroup.MarginLayoutParams) llHead.getLayoutParams();
@@ -930,7 +950,7 @@ public abstract class CustomMainFragment extends Fragment implements ViewPager.O
      * @date 创建时间:2018/12/3
      * @author Chuck
      **/
-    protected      boolean  isRefreshable(){
+    protected      boolean isRefreshable() {
         return true;
     }
 
