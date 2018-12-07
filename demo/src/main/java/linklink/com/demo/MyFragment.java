@@ -41,7 +41,11 @@ public class MyFragment extends CustomMainFragment {
     }
 
 
+    @Override
+    protected View getRightFloatView() {
+        return LayoutInflater.from(getActivity()).inflate(R.layout.right_float_btn, null);
 
+    }
 
     @Override
     public int getTitleViewMarginTop() {

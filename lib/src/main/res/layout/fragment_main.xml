@@ -132,4 +132,13 @@
     </linklink.com.scrollview_within_recyclerview.custom_view.CGBHeader>
 
 
+    <RelativeLayout
+        android:layout_alignParentRight="true"
+        android:id="@+id/rl_right_float"
+        android:layout_width="100dp"
+        android:layout_height="match_parent">
+
+    </RelativeLayout>
+
+
 </RelativeLayout>

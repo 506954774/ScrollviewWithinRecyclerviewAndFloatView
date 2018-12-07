@@ -47,6 +47,6 @@ ext {
     desc = 'ScrollviewWithinRecyclerviewAndFloatView'
     website = 'https://github.com/506954774/ScrollviewWithinRecyclerviewAndFloatView'
     licences = ['Apache-2.0']
-    publishVersion='1.0.7'
+    publishVersion='1.0.8'
 
 }

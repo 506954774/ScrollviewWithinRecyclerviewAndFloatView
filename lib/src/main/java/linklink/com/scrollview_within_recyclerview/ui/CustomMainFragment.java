@@ -63,6 +63,8 @@ public abstract class CustomMainFragment extends Fragment implements ViewPager.O
     private boolean mRefreshing;
 
 
+    private RelativeLayout rl_right_float;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -87,6 +89,8 @@ public abstract class CustomMainFragment extends Fragment implements ViewPager.O
         vp= (ViewPager) getView().findViewById(R.id.vp);
         rl_content_root= (RelativeLayout) getView().findViewById(R.id.rl_content_root);
 
+        rl_right_float=getView().findViewById(R.id.rl_right_float);
+
         //重置title高度(子类的title可能需要设置不同的高度)
         ViewGroup.LayoutParams pa=rlTitleFilled.getLayoutParams();
         pa.height= getTitleViewParentHeight();
@@ -105,6 +109,10 @@ public abstract class CustomMainFragment extends Fragment implements ViewPager.O
         titlePa.setMargins(0, getTitleViewMarginTop(),0,0);
 
 
+        View rightFloatView=getRightFloatView();
+        if(rightFloatView!=null){
+            rl_right_float.addView(rightFloatView);
+        }
 
 
         View headView=getHeadView();
@@ -1004,6 +1012,19 @@ public abstract class CustomMainFragment extends Fragment implements ViewPager.O
      * @author Chuck
      **/
     public  abstract View getTitleView();
+
+    /**
+     * @method name:getRightFloatView()
+     * @des:设置右边悬浮控件
+     * @param :[]
+     * @return type:android.view.View
+     * @date 创建时间:2018/6/25
+     * @author Chuck
+     **/
+    protected    View getRightFloatView(){
+        return null;
+    };
+
 
     /**
      * @method name:getTitleViewParentHeight

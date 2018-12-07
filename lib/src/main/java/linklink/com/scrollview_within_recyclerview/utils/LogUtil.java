@@ -15,7 +15,7 @@ import linklink.com.scrollview_within_recyclerview.BuildConfig;
 public class LogUtil {
 
     //private  static  final boolean LOG = BuildConfig.DEBUG;//gradle里面配置
-    private  static  final boolean LOG = true;//gradle里面配置
+    public   static  boolean LOG = BuildConfig.DEBUG;//gradle里面配置
 
     public static void i(String tag, Object object){
         if(LOG){
