@@ -34,6 +34,9 @@ import linklink.com.scrollview_within_recyclerview.utils.LogUtil;
  * 修改人： Chuck
  * 创建/修改时间: 2018/6/25  10:11
  * Copyright : 2014-2018 深圳令令科技有限公司-版权所有
+ * github:
+ * website = 'https://github.com/506954774/ScrollviewWithinRecyclerviewAndFloatView'
+
  **/
 public abstract class CustomMainFragment extends Fragment implements ViewPager.OnPageChangeListener {
 
