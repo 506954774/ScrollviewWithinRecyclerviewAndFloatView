@@ -2,13 +2,11 @@ package linklink.com.demo;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 
 import java.util.ArrayList;
 
-import linklink.com.scrollview_within_recyclerview.R;
 import linklink.com.scrollview_within_recyclerview.base.CustomBaseFragment2;
 import linklink.com.scrollview_within_recyclerview.ui.*;
 import linklink.com.scrollview_within_recyclerview.utils.DensityUtil;

@@ -6,23 +6,21 @@
 
 
 
-        <TextView
+        <ImageView
 
             android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
 
-            android:layout_marginBottom="150dp"
+            android:paddingBottom="100dp"
 
             android:id="@+id/tv_title"
 
             android:visibility="visible"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:ellipsize="end"
 
-            android:gravity="center"
-            android:layout_centerInParent="true"
-            android:singleLine="true"
-            android:text="悬浮"
+          android:src="@mipmap/ic_launcher"
             android:textSize="40sp" />
 
 

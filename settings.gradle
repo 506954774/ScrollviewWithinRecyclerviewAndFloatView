@@ -1,2 +1,2 @@
-//include ':lib', ':demo'
-include ':lib'
+include ':lib', ':demo'
+//include ':lib'

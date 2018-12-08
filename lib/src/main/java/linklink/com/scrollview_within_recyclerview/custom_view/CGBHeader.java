@@ -69,7 +69,7 @@ public class CGBHeader extends FrameLayout  {
 
         mTitleTextView.setVisibility(VISIBLE);
         mTitleTextView.setText("全力加载ing");
-        mImageView.setImageResource(R.drawable.anim_loading_bolck);
+        mImageView.setBackgroundResource(R.drawable.anim_loading_bolck);
         if(mImageView.getBackground() instanceof AnimationDrawable){
             ((AnimationDrawable) mImageView.getBackground()).start();
         }
