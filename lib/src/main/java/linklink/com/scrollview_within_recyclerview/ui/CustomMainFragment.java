@@ -730,6 +730,8 @@ public abstract class CustomMainFragment extends Fragment implements ViewPager.O
         ivBackground.setAlpha(alpha);
 
 
+        //抛给子类
+        setAlpha(alpha);
 
     }
 

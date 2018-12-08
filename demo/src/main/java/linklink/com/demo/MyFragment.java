@@ -2,6 +2,7 @@ package linklink.com.demo;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -19,6 +20,12 @@ import linklink.com.scrollview_within_recyclerview.utils.DensityUtil;
  * Copyright : 2017-2018 深圳令令科技有限公司-版权所有
  **/
 public class MyFragment extends CustomMainFragment {
+
+    @Override
+    protected void setAlpha(float alpha) {
+        super.setAlpha(alpha);
+        Log.i("MyFragment","ALPHA:"+alpha);
+    }
 
     @Override
     public int getTitleBackgroundRes(){
