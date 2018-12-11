@@ -782,6 +782,8 @@ public abstract class CustomMainFragment extends Fragment implements ViewPager.O
                     DOWN_BACK_THRESHOLD = mCGBHeaderHeight*2;//是否可以下滑,下滑的上限.有则滑到极限松手,回弹
                     TOP_REFRESH_THRESHOLD = mCGBHeaderHeight;//触发刷新的阈值
 
+                    DOWN_BACK_THRESHOLD=getPullDownThreshold();
+
 
                     //如果虚拟物理键盘被隐藏了,这个应该会被回调.所以不再remove监听.只要界面有重绘,就重新设置viewPager的高度
                     getView().getViewTreeObserver().removeGlobalOnLayoutListener(this);//只需要监听一次，之后通过listener回调即可
@@ -808,6 +810,10 @@ public abstract class CustomMainFragment extends Fragment implements ViewPager.O
                 }
             });
         }
+    }
+
+    protected int getPullDownThreshold() {
+       return 0;
     }
 
     @Override
