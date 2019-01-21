@@ -181,13 +181,13 @@ public abstract class CustomMainFragment extends Fragment implements ViewPager.O
 
 
 
-                        if (mScroolMax == 0) {//是个正值,head在上滑的上限值
+                        //if (mScroolMax == 0) {//是个正值,head在上滑的上限值
                             //悬浮于顶部,距离值
                             mScroolMax = adList.getHeight()-rlTitleFilled.getHeight();
 
                             //mScroolMax = mViewBind.llHead.getHeight() - mViewBind.llTabContainer.getHeight()-mViewBind.rlTitleFilled.getHeight();
                             LogUtil.e(TAG, "能上滑的最大距离:" + mScroolMax);
-                        }
+                      //  }
 
                         mHeadLastY = (int) event.getRawY();//最后一个action时Y值
                         mHeadActionDownX = (int) event.getRawX();//按下的瞬间X
@@ -465,13 +465,13 @@ public abstract class CustomMainFragment extends Fragment implements ViewPager.O
 
                     case MotionEvent.ACTION_DOWN://按下时记录纵坐标,注意,如果按下时没有记录的话,这个值会是空,所以,在父容器里要把
                         //按下一瞬间的值传过来(接口形式),否则首次的值会是0.结果造成滑动距离超标
-                        if (mScroolMax == 0) {//是个正值,head在上滑的上限值
+                        //if (mScroolMax == 0) {//是个正值,head在上滑的上限值
                             //悬浮于顶部,距离值
                             mScroolMax = adList.getHeight()-rlTitleFilled.getHeight();
 
                             // mScroolMax = mViewBind.llHead.getHeight() - mViewBind.llTabContainer.getHeight();
                             LogUtil.e(TAG, "能上滑的最大距离:" + mScroolMax);
-                        }
+                       // }
 
                         mContainerLastY = (int) event.getRawY();//最后一个action时Y值
                         mContainerActionDownX = (int) event.getRawX();//按下的瞬间X
@@ -1088,7 +1088,21 @@ public abstract class CustomMainFragment extends Fragment implements ViewPager.O
     public  abstract   ArrayList<CustomBaseFragment2> getSubFragments();
 
 
-
+    /**
+     * @method name:resetScroolMax
+     * @des:重置悬浮判定阈值
+     * @param :[]
+     * @return type:void
+     * @date 创建时间:2019/1/21
+     * @author Chuck
+     **/
+    protected void resetScroolMax(){
+        if(adList!=null&&rlTitleFilled!=null){
+            mScroolMax = adList.getHeight()-rlTitleFilled.getHeight();
+            //mScroolMax = mViewBind.llHead.getHeight() - mViewBind.llTabContainer.getHeight()-mViewBind.rlTitleFilled.getHeight();
+            LogUtil.e(TAG, "能上滑的最大距离:" + mScroolMax);
+        }
+    }
 
 
 }

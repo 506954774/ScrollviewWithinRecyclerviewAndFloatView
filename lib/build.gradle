@@ -77,8 +77,8 @@ publish {
     userOrg = 'linklink'  //这个不是用户名,是组织名
     groupId = 'com.linklink.views'  //可随意填写,一般填公司名加模块名
     artifactId = 'ScrollviewWithinRecyclerviewAndFloatView'  //这个是在bintray.com的网页里添加的package name.
-    version = '1.1.1'
-    publishVersion='1.1.1'
+    version = '1.1.3'
+    publishVersion='1.1.3'
     description = 'ScrollviewWithinRecyclerviewAndFloatView'
     desc='ScrollviewWithinRecyclerviewAndFloatView'
     website = 'https://github.com/506954774/ScrollviewWithinRecyclerviewAndFloatView'
